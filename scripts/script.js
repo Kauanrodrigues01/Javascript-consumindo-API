@@ -1,25 +1,26 @@
-const containerVideos = document.querySelector('.videos__container');
+const containerVideos = document.querySelector('.videos__container')
+const searchInput = document.getElementById("searchInput")
+const autocompleteList = document.getElementById("autocomplete-list")
 
+// Função para buscar dados do JSON
 async function buscarEMostrarVideos() {
     try {
-        const buscaNaAPI = await fetch('https://raw.githubusercontent.com/Kauanrodrigues01/Javascript-consumindo-API/main/backend/videos.json');
+        const buscaNaAPI = await fetch('https://raw.githubusercontent.com/Kauanrodrigues01/Javascript-consumindo-API/main/backend/videos.json')
         
         if (!buscaNaAPI.ok) {
-            throw new Error('Falha ao buscar dados: ' + buscaNaAPI.status);
+            throw new Error('Falha ao buscar dados: ' + buscaNaAPI.status)
         }
 
-        const responseJson = await buscaNaAPI.json();
-        
-        // Acessar o array de vídeos dentro do objeto
-        const videos = responseJson.videos;
+        const responseJson = await buscaNaAPI.json()
+        const videos = responseJson.videos
 
         if (!Array.isArray(videos)) {
-            throw new Error('Dados retornados não são um array');
+            throw new Error('Dados retornados não são um array')
         }
         
         videos.forEach(elementVideo => {
             if (!elementVideo.categoria) {
-                throw new Error("Vídeo não tem categoria");
+                throw new Error("Vídeo não tem categoria")
             }
             containerVideos.innerHTML += `
             <li class="videos__item">
@@ -31,55 +32,78 @@ async function buscarEMostrarVideos() {
                     <p class="categoria" hidden>${elementVideo.categoria}</p>
                 </div>
             </li>
-            `;
-        });
+            `
+        })
+
+        // Adicionar evento de entrada
+        searchInput.addEventListener("input", () => {
+            const query = searchInput.value
+            exibirSugestoesDePesquisa(videos, query)
+            filtrarPesquisa()
+        })
+
     } catch (error) {
-        console.error('Erro ao carregar os vídeos:', error);
-        containerVideos.innerHTML = `<p>Houve um erro ao carregar os vídeos: ${error.message}</p>`;
+        console.error('Erro ao carregar os vídeos:', error)
+        containerVideos.innerHTML = `<p>Houve um erro ao carregar os vídeos: ${error.message}</p>`
     }
 }
 
-buscarEMostrarVideos();
+// Função para exibir sugestões de autocompletar
+function exibirSugestoesDePesquisa(videos, query) {
+    autocompleteList.innerHTML = ''
+    if (query.length === 0) {
+        return
+    }
 
-const barraPesquisa = document.querySelector('.pesquisar__input');
-barraPesquisa.addEventListener('input', filtrarPesquisa);
+    // filtra o array videos, com apenas os vídeos que o titulo incluir a pesquisa e remove os acentos e deixa tudo minúsculo antes de verificar
+    const videosFiltrados = videos.filter(video => video.titulo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(query.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')))
 
+    videosFiltrados.forEach(video => {
+        const itemDeSugestao = document.createElement("div")
+        itemDeSugestao.classList.add("autocomplete-suggestion")
+        itemDeSugestao.textContent = video.titulo
+        itemDeSugestao.addEventListener("click", () => {
+            searchInput.value = video.titulo
+            autocompleteList.innerHTML = ''
+            filtrarPesquisa()
+        })
+        autocompleteList.appendChild(itemDeSugestao)
+    })
+}
+
+// Função para filtrar vídeos com base na pesquisa
 function filtrarPesquisa() {
-    const videos = document.querySelectorAll('.videos__item');
-
-    if (barraPesquisa.value !== '') {
-        const valorFiltro = barraPesquisa.value.toLowerCase();
-        videos.forEach((video) => {
-            let titulo = video.querySelector('.titulo-video').textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            if (!titulo.includes(valorFiltro)) {
-                video.style.display = 'none';
-            } else {
-                video.style.display = 'block';
-            }
-        });
-    } else {
-        videos.forEach((video) => {
-            video.style.display = 'block';
-        });
-    }
+    const videos = document.querySelectorAll('.videos__item')
+    const valorFiltro = searchInput.value.toLowerCase()
+    videos.forEach((video) => {
+        let titulo = video.querySelector('.titulo-video').textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        if (!titulo.includes(valorFiltro)) {
+            video.style.display = 'none'
+        } else {
+            video.style.display = 'block'
+        }
+    })
 }
 
-const botoesCategoria = document.querySelectorAll(".superior__item");
-botoesCategoria.forEach((botao) => {
-    let nomeCategoria = botao.getAttribute("name");
-    botao.addEventListener("click", () => filtrarPorCategoria(nomeCategoria));
-});
-
+// Função para filtrar vídeos com base na categoria
 function filtrarPorCategoria(filtro) {
-    const videos = document.querySelectorAll(".videos__item");
+    const videos = document.querySelectorAll(".videos__item")
     videos.forEach((video) => {
-        let categoria = video.querySelector(".categoria").textContent.toLowerCase();
-        let valorFiltro = filtro.toLowerCase();
+        let categoria = video.querySelector(".categoria").textContent.toLowerCase()
+        let valorFiltro = filtro.toLowerCase()
 
         if (!categoria.includes(valorFiltro) && valorFiltro !== 'tudo') {
-            video.style.display = "none";
+            video.style.display = "none"
         } else {
-            video.style.display = "block";
+            video.style.display = "block"
         }
-    });
+    })
 }
+
+buscarEMostrarVideos()
+
+const botoesCategoria = document.querySelectorAll(".superior__item")
+botoesCategoria.forEach((botao) => {
+    let nomeCategoria = botao.getAttribute("name")
+    botao.addEventListener("click", () => filtrarPorCategoria(nomeCategoria))
+})

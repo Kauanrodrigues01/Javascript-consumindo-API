@@ -64,6 +64,7 @@
   white-space: nowrap;
   overflow: scroll;
   gap: 15px;
+  z-index: 2;
 }
 
 
@@ -104,6 +105,15 @@
   grid-area: 1 / 1 / 3 / 2;
 } 
 
+.cabecalho__pesquisar__item {
+  display: block;
+  transform: translate(-60px);
+}
+
+.pesquisar__input {
+  width: 100px;
+}
+
 @media (min-width: 834px) {
   /* MENU LATERAL*/
 
@@ -119,6 +129,15 @@
     justify-content: flex-start;
     padding-top: 15px;
     gap: 33px;
+  }
+
+  .cabecalho__pesquisar__item {
+    display: block;
+    transform: translate(-60px);
+  }
+
+  .pesquisar__input {
+    width: 200px;
   }
 }
 
