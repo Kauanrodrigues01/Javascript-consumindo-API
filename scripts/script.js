@@ -2,7 +2,7 @@ const containerVideos = document.querySelector('.videos__container')
 
 async function buscarEMostrarVideos(){
     try{
-        const buscaNaAPI = await fetch('http://localhost:3000/videos')
+        const buscaNaAPI = await fetch('https://github.com/Kauanrodrigues01/Javascript-consumindo-API/blob/main/backend/videos.json')
         const videos = await buscaNaAPI.json()
         
         videos.forEach(elementVideo => {
