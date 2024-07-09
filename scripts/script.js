@@ -4,6 +4,7 @@ const autocompleteList = document.getElementById("autocomplete-list")
 
 // Função para buscar dados do JSON
 async function buscarEMostrarVideos() {
+    // debugger
     try {
         const buscaNaAPI = await fetch('https://raw.githubusercontent.com/Kauanrodrigues01/Javascript-consumindo-API/main/backend/videos.json')
         
@@ -37,6 +38,8 @@ async function buscarEMostrarVideos() {
 
         // Adicionar evento de entrada
         searchInput.addEventListener("input", () => {
+            autocompleteList.style.height = 'auto'
+            autocompleteList.style.maxHeight = '150px'
             const query = searchInput.value
             exibirSugestoesDePesquisa(videos, query)
             filtrarPesquisa()
@@ -44,12 +47,12 @@ async function buscarEMostrarVideos() {
 
     } catch (error) {
         console.error('Erro ao carregar os vídeos:', error)
-        containerVideos.innerHTML = `<p>Houve um erro ao carregar os vídeos: ${error.message}</p>`
     }
-}
+}   
 
 // Função para exibir sugestões de autocompletar
 function exibirSugestoesDePesquisa(videos, query) {
+    // debugger
     autocompleteList.innerHTML = ''
     if (query.length === 0) {
         return
@@ -57,9 +60,9 @@ function exibirSugestoesDePesquisa(videos, query) {
 
     // filtra o array videos, com apenas os vídeos que o titulo incluir a pesquisa e remove os acentos e deixa tudo minúsculo antes de verificar
     const videosFiltrados = videos.filter(video => video.titulo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(query.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')))
-
+    
     videosFiltrados.forEach(video => {
-        const itemDeSugestao = document.createElement("div")
+        const itemDeSugestao = document.createElement("li")
         itemDeSugestao.classList.add("autocomplete-suggestion")
         itemDeSugestao.textContent = video.titulo
         itemDeSugestao.addEventListener("click", () => {
@@ -73,8 +76,9 @@ function exibirSugestoesDePesquisa(videos, query) {
 
 // Função para filtrar vídeos com base na pesquisa
 function filtrarPesquisa() {
+    // debugger
     const videos = document.querySelectorAll('.videos__item')
-    const valorFiltro = searchInput.value.toLowerCase()
+    const valorFiltro = searchInput.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     videos.forEach((video) => {
         let titulo = video.querySelector('.titulo-video').textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
         if (!titulo.includes(valorFiltro)) {
