@@ -1,6 +1,12 @@
-*,
-*::before,
-*::after {
+*, *::before, *::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+:root {
+    /* Cores do modo light */
     --azul-profundo: #01080E;
     --azul-escuro: #041832;
     --azul-medio: #144480;
@@ -10,9 +16,22 @@
     --cinza-medio: #C5C5C5;
     --cinza-claro: #F2F2F2;
     --branco: #FFFFFF;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    --bg-body: #ffffff;
+    --color-text: #000;
+}
+
+[data-mode="dark"] {
+    --azul-profundo: #06121E;
+    --azul-escuro: #0C2B4C;
+    --azul-medio: #1E598E;
+    --azul-destaque-light: #3A8ED6;
+    --azul-destaque-dark: #4CA3E5;
+    --cinza-escuro: #333333;
+    --cinza-medio: #fff;
+    --cinza-claro: #fff;
+    --branco: #FFFFFF; /* Cor branca permanece a mesma */
+    --bg-body: #000000dd;
+    --color-text: #fff;
 }
 
 html{
@@ -21,7 +40,7 @@ html{
 
 body {
     font-family: Roboto, Arial, Helvetica, sans-serif;
-    background-color: var(--branco);
+    background-color: var(--bg-body);
     position: relative;
     width: 100vw;
     height: 100vh;
@@ -225,7 +244,7 @@ body {
 /* Menu lateral */
 .menu__container {
     font-size: 14px;
-    background-color: var(--branco);
+    background-color: var(--bg-body);
 }
 
 .icone__inicio::before {
@@ -306,6 +325,7 @@ body {
 
 .menu__lista{
     display: none;
+    background-color: var(--bg-body);
 }
 
 /* Menu */
@@ -313,6 +333,7 @@ body {
     position: fixed;
     bottom: 0;
     width: 100%;
+    background-color: var(--bg-body);
 }
 
 .menu__lista:nth-child(1){
@@ -323,8 +344,8 @@ body {
     list-style: none;
     border-top: 1px solid rgba(0, 0, 0, 0.251);
     padding: 15px 0px;
-    background-color: var(--branco);
     gap: 20px;
+    background-color: var(--bg-body);
 }
 
 .menu__lista:nth-child(1) > * > a{
@@ -667,4 +688,8 @@ hr{
     background-color: var(--azul-destaque-light);
     color: var(--branco);
     font-weight: 400;
+}
+
+p, h2, h3, span{
+    color: var(--color-text) !important;
 }
