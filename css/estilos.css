@@ -126,7 +126,7 @@ body {
     height: 23px;
     width: 23px;
     left: 1px;
-    bottom: 1px;
+    bottom: 1.5px;
     background-color: var(--branco);
     -webkit-transition: .4s;
     transition: .4s;

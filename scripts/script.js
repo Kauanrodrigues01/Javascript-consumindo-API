@@ -6,7 +6,7 @@ const autocompleteList = document.getElementById("autocomplete-list")
 async function buscarEMostrarVideos() {
     // debugger
     try {
-        const buscaNaAPI = await fetch('https://raw.githubusercontent.com/Kauanrodrigues01/Javascript-consumindo-API/main/backend/videos.jso')
+        const buscaNaAPI = await fetch('https://raw.githubusercontent.com/Kauanrodrigues01/Javascript-consumindo-API/main/backend/videos.json')
         
         if (!buscaNaAPI.ok) {
             throw new Error('Falha ao buscar dados: ' + buscaNaAPI.status)
