@@ -153,6 +153,7 @@ body {
     padding: 10px 15px;
     display: flex;
     align-items: center;
+    justify-content: center;
     max-width: 100%;
 }
 
@@ -168,6 +169,29 @@ body {
     padding-top: 5px;
 }
 
+/* Estiliza a barra de rolagem */
+.superior__secao__container-wrapper::-webkit-scrollbar {
+    width: 12px; /* Largura da barra de rolagem */
+    height: 5px; /* Altura da barra de rolagem horizontal */
+}
+
+/* Estiliza a parte interna da barra de rolagem (trilho) */
+.superior__secao__container-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Cor do trilho */
+    border-radius: 10px; /* Arredondamento do trilho */
+}
+
+/* Estiliza o polegar da barra de rolagem */
+.superior__secao__container-wrapper::-webkit-scrollbar-thumb {
+    background: #888; /* Cor do polegar */
+    border-radius: 10px; /* Arredondamento do polegar */
+}
+
+/* Estiliza o polegar da barra de rolagem ao passar o mouse */
+.superior__secao__container-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Cor do polegar ao passar o mouse */
+}
+
 .superior__item{
     color: var(--cinza-escuro);
     background-color: var(--cinza-claro);
@@ -175,11 +199,27 @@ body {
     border-radius: 5px;
     text-decoration: none;
     font-size: 14px;
+    transition: background .6s ease, color .3s ease;
+}
+
+.superior__item:hover{
+    color: var(--branco);
+    background-color: var(--azul-destaque-light);
+    transition: background .6s ease, color .3s ease;
 }
 
 .superior__item-active{
     background-color: var(--azul-destaque-light);
     color: var(--branco);
+}
+
+.superior__slider{
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.img-seta{
+    min-height: 100%;
 }
 
 /* Menu lateral */
@@ -417,6 +457,7 @@ hr{
         width: 40px;
         height: 40px;
         margin-left: 3px;
+        cursor: pointer;
     }
 
     .cabecalho__bntPesquisar{

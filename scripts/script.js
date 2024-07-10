@@ -6,7 +6,7 @@ const autocompleteList = document.getElementById("autocomplete-list")
 async function buscarEMostrarVideos() {
     // debugger
     try {
-        const buscaNaAPI = await fetch('https://raw.githubusercontent.com/Kauanrodrigues01/Javascript-consumindo-API/main/backend/videos.json')
+        const buscaNaAPI = await fetch('https://raw.githubusercontent.com/Kauanrodrigues01/Javascript-consumindo-API/main/backend/videos.jso')
         
         if (!buscaNaAPI.ok) {
             throw new Error('Falha ao buscar dados: ' + buscaNaAPI.status)
@@ -107,7 +107,15 @@ function filtrarPorCategoria(filtro) {
 buscarEMostrarVideos()
 
 const botoesCategoria = document.querySelectorAll(".superior__item")
+
 botoesCategoria.forEach((botao) => {
     let nomeCategoria = botao.getAttribute("name")
-    botao.addEventListener("click", () => filtrarPorCategoria(nomeCategoria))
+    botao.addEventListener("click", () => {
+        // debugger
+        botoesCategoria.forEach((botao) => {
+            botao.classList.remove('superior__item-active')
+        })
+        botao.classList.add('superior__item-active')
+        filtrarPorCategoria(nomeCategoria)
+    })
 })
