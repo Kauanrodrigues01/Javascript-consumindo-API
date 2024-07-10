@@ -55,6 +55,7 @@ const btnAlternarModo = document.querySelector('.cabecalho__switch-input')
 
 btnAlternarModo.addEventListener('change', () => {
     // debugger
+    alert('O dark-mode aplicado aqui foi sem foco no design apenas para testar essa funcionalidade')
     toggleMode()
 })
 
