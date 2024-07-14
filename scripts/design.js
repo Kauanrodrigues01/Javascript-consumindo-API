@@ -48,8 +48,6 @@ btnScrollBarSecaoSuperior.addEventListener('click', () => {
     smoothScroll(secaoSuperior, 300, 500) // Rola para a direita 100 pixels em 500ms
 })
 
-
-
 // FUNCIONALIDADE PARA ALTERNAR ENTRE O MODO CLARO E ESCURO
 const btnAlternarModo = document.querySelector('.cabecalho__switch-input')
 
